@@ -163,6 +163,8 @@ const SmoothScrollLenis = (() => {
             requestAnimationFrame(raf);
         }
 
+        const isTouch = window.matchMedia('(pointer: coarse)').matches;
+
         document.querySelectorAll('a[href^="#"]').forEach((link) => {
             link.addEventListener('click', (e) => {
                 const targetId = link.getAttribute('href').slice(1);
@@ -170,7 +172,12 @@ const SmoothScrollLenis = (() => {
                 const target = document.getElementById(targetId);
                 if (!target) return;
                 e.preventDefault();
-                lenis.scrollTo(target, { offset: -72, duration: 1.4 });
+                if (isTouch) {
+                    const top = target.getBoundingClientRect().top + window.scrollY - 72;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                } else {
+                    lenis.scrollTo(target, { offset: -72, duration: 1.4 });
+                }
             });
         });
     };
