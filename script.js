@@ -1,47 +1,27 @@
 /**
  * ============================================================
  * THIAGO SILVA — PORTFOLIO
- * script.js  |  Vanilla JS — modular, clean & commented
+ * script.js  |  GSAP + ScrollTrigger + Lenis + AOS + tsParticles
  * ============================================================
- *
- * Modules:
- *  1. Preloader
- *  2. Theme Toggle (dark / light)
- *  3. Navbar — scroll state & active link
- *  4. Mobile Menu
- *  5. Scroll Reveal Animations
- *  6. Animated Number Counters
- *  7. Project Filter
- *  8. Skill Bars Animation
- *  9. Contact Form (validation + simulated send)
- * 10. Back-to-Top Button
- * 11. Footer Year
- * 12. Init
  */
 
 'use strict';
 
 /* ─── 1. PRELOADER ─────────────────────────────────────────── */
-/**
- * Hides the preloader overlay after the page has fully loaded.
- * Falls back to a timeout in case the load event already fired.
- */
 const Preloader = (() => {
     const el = document.getElementById('preloader');
 
     const hide = () => {
         if (!el) return;
         el.classList.add('hidden');
-        // Remove from DOM after transition for accessibility
         el.addEventListener('transitionend', () => el.remove(), { once: true });
     };
 
     const init = () => {
-        if (document.readyState === 'complete') {
-            setTimeout(hide, 300);
-        } else {
-            window.addEventListener('load', () => setTimeout(hide, 400));
-        }
+        const delay = document.readyState === 'complete' ? 1900 : 2000;
+        const run = () => setTimeout(hide, delay);
+        if (document.readyState === 'complete') run();
+        else window.addEventListener('load', run);
     };
 
     return { init };
@@ -49,16 +29,11 @@ const Preloader = (() => {
 
 
 /* ─── 2. THEME TOGGLE ──────────────────────────────────────── */
-/**
- * Manages dark / light theme switching.
- * Persists preference to localStorage and respects system preference.
- */
 const ThemeManager = (() => {
     const STORAGE_KEY = 'portfolio-theme';
-    const htmlEl = document.documentElement;
+    const htmlEl   = document.documentElement;
     const toggleBtn = document.getElementById('theme-toggle');
 
-    /** Get user's stored or system preference */
     const getPreferred = () => {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored) return stored;
@@ -68,23 +43,17 @@ const ThemeManager = (() => {
     const applyTheme = (theme) => {
         htmlEl.setAttribute('data-theme', theme);
         localStorage.setItem(STORAGE_KEY, theme);
-        // Update aria-label for accessibility
         if (toggleBtn) {
-            toggleBtn.setAttribute(
-                'aria-label',
-                theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro'
-            );
+            toggleBtn.setAttribute('aria-label',
+                theme === 'dark' ? 'Ativar modo claro' : 'Ativar modo escuro');
         }
-    };
-
-    const toggle = () => {
-        const current = htmlEl.getAttribute('data-theme');
-        applyTheme(current === 'dark' ? 'light' : 'dark');
     };
 
     const init = () => {
         applyTheme(getPreferred());
-        toggleBtn?.addEventListener('click', toggle);
+        toggleBtn?.addEventListener('click', () => {
+            applyTheme(htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+        });
     };
 
     return { init };
@@ -92,47 +61,39 @@ const ThemeManager = (() => {
 
 
 /* ─── 3. NAVBAR ────────────────────────────────────────────── */
-/**
- * Adds 'scrolled' class when user scrolls past threshold.
- * Also highlights the active section link using IntersectionObserver.
- */
 const Navbar = (() => {
-    const navbar = document.getElementById('navbar');
+    const navbar   = document.getElementById('navbar');
     const navLinks = document.querySelectorAll('.nav-link');
-    const THRESHOLD = 50; // px before navbar becomes opaque
 
-    /** Scroll state */
-    const handleScroll = () => {
-        if (!navbar) return;
-        navbar.classList.toggle('scrolled', window.scrollY > THRESHOLD);
-    };
+    const init = () => {
+        const handleScroll = () =>
+            navbar?.classList.toggle('scrolled', window.scrollY > 50);
 
-    /** Highlight active nav link */
-    const observeSections = () => {
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
         const sections = document.querySelectorAll('main section[id]');
         if (!sections.length) return;
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const id = entry.target.id;
-                        navLinks.forEach((link) => {
-                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
-                        });
-                    }
-                });
-            },
-            { rootMargin: '-40% 0px -55% 0px' }
-        );
-
-        sections.forEach((section) => observer.observe(section));
-    };
-
-    const init = () => {
-        handleScroll();
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        observeSections();
+        new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach((link) =>
+                        link.classList.toggle('active',
+                            link.getAttribute('href') === `#${entry.target.id}`));
+                }
+            });
+        }, { rootMargin: '-40% 0px -55% 0px' }).observe
+            ? sections.forEach((s) =>
+                new IntersectionObserver((entries) => {
+                    entries.forEach((e) => {
+                        if (e.isIntersecting)
+                            navLinks.forEach((l) =>
+                                l.classList.toggle('active',
+                                    l.getAttribute('href') === `#${e.target.id}`));
+                    });
+                }, { rootMargin: '-40% 0px -55% 0px' }).observe(s))
+            : null;
     };
 
     return { init };
@@ -140,10 +101,6 @@ const Navbar = (() => {
 
 
 /* ─── 4. MOBILE MENU ───────────────────────────────────────── */
-/**
- * Toggles the mobile navigation drawer.
- * Manages aria attributes and closes on link click or outside tap.
- */
 const MobileMenu = (() => {
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
@@ -154,8 +111,7 @@ const MobileMenu = (() => {
         mobileMenu.removeAttribute('hidden');
         menuToggle.classList.add('open');
         menuToggle.setAttribute('aria-expanded', 'true');
-        menuToggle.setAttribute('aria-label', 'Fechar menu');
-        document.body.style.overflow = 'hidden'; // prevent background scroll
+        document.body.style.overflow = 'hidden';
         isOpen = true;
     };
 
@@ -163,111 +119,58 @@ const MobileMenu = (() => {
         mobileMenu.setAttribute('hidden', '');
         menuToggle.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Abrir menu');
         document.body.style.overflow = '';
         isOpen = false;
     };
 
-    const toggle = () => (isOpen ? close() : open());
-
     const init = () => {
         if (!menuToggle || !mobileMenu) return;
-
-        menuToggle.addEventListener('click', toggle);
-
-        // Close on link click
-        mobileLinks.forEach((link) => link.addEventListener('click', close));
-
-        // Close on outside click
+        menuToggle.addEventListener('click', () => (isOpen ? close() : open()));
+        mobileLinks.forEach((l) => l.addEventListener('click', close));
         document.addEventListener('click', (e) => {
-            if (isOpen && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-                close();
-            }
+            if (isOpen && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) close();
         });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && isOpen) close();
-        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isOpen) close(); });
     };
 
     return { init };
 })();
 
 
-/* ─── 5. SCROLL REVEAL ─────────────────────────────────────── */
-/**
- * Reveals elements with class .reveal when they enter the viewport.
- * Uses IntersectionObserver for performance.
- */
-const ScrollReveal = (() => {
-    const revealEls = document.querySelectorAll('.reveal');
-
-    const observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target); // animate once
-                }
-            });
-        },
-        { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
+/* ─── 5. LENIS SMOOTH SCROLL ───────────────────────────────── */
+const SmoothScrollLenis = (() => {
+    let lenis = null;
 
     const init = () => {
-        revealEls.forEach((el) => observer.observe(el));
-    };
+        if (typeof Lenis === 'undefined') return;
 
-    return { init };
-})();
-
-
-/* ─── 6. ANIMATED COUNTERS ─────────────────────────────────── */
-// Removed — stats section was removed from the portfolio.
-const Counters = { init: () => { } };
-
-
-/* ─── 7. PROJECT FILTER ────────────────────────────────────── */
-/**
- * Filters project cards by category.
- * Adds a smooth fade/hide effect to non-matching cards.
- */
-const ProjectFilter = (() => {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const projectCards = document.querySelectorAll('.project-card');
-
-    const filterProjects = (filter) => {
-        projectCards.forEach((card) => {
-            const category = card.dataset.category;
-            const show = filter === 'all' || category === filter;
-
-            if (show) {
-                card.classList.remove('hidden');
-                // Trigger reflow for animation
-                void card.offsetHeight;
-                card.style.opacity = '1';
-                card.style.transform = '';
-            } else {
-                card.style.opacity = '0';
-                card.style.transform = 'scale(0.96)';
-                // Hide after transition
-                setTimeout(() => card.classList.add('hidden'), 250);
-            }
+        lenis = new Lenis({
+            duration: 1.3,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
         });
-    };
 
-    const init = () => {
-        if (!filterBtns.length) return;
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => lenis.raf(time * 1000));
+            gsap.ticker.lagSmoothing(0);
+        } else {
+            const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+            requestAnimationFrame(raf);
+        }
 
-        filterBtns.forEach((btn) => {
-            btn.addEventListener('click', () => {
-                // Update active state
-                filterBtns.forEach((b) => b.classList.remove('filter-btn--active'));
-                btn.classList.add('filter-btn--active');
-
-                const filter = btn.dataset.filter;
-                filterProjects(filter);
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                const targetId = link.getAttribute('href').slice(1);
+                if (!targetId) return;
+                const target = document.getElementById(targetId);
+                if (!target) return;
+                e.preventDefault();
+                lenis.scrollTo(target, { offset: -72, duration: 1.4 });
             });
         });
     };
@@ -276,239 +179,407 @@ const ProjectFilter = (() => {
 })();
 
 
-/* ─── 8. SKILL BARS ────────────────────────────────────────── */
-// Removed — skill bars replaced with chip cards in this version.
-const SkillBars = { init: () => { } };
+/* ─── 6. AOS ───────────────────────────────────────────────── */
+const AOSManager = (() => {
+    const init = () => {
+        if (typeof AOS === 'undefined') return;
+        AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true, offset: 60 });
+    };
+    return { init };
+})();
 
 
-/* ─── 9. CONTACT FORM ──────────────────────────────────────── */
-/**
- * Handles form validation and simulates an async form submission.
- * Shows success or error feedback without a backend.
- */
+/* ─── 7. HERO WORD SPLIT ANIMATION (GSAP) ──────────────────── */
+const HeroWordSplit = (() => {
+    const init = () => {
+        if (typeof gsap === 'undefined') return;
+
+        const words = document.querySelectorAll('.hero-title .word');
+        const badge = document.querySelector('.hero-badge');
+        const desc  = document.querySelector('.hero-description');
+        const ctas  = document.querySelector('.hero-ctas');
+        const meta  = document.querySelector('.hero-meta');
+
+        const tl = gsap.timeline({ delay: 1.9 });
+
+        if (words.length) {
+            tl.to(words, {
+                y: 0,
+                opacity: 1,
+                duration: 0.9,
+                ease: 'power4.out',
+                stagger: 0.12,
+            }, 0);
+        }
+
+        if (badge) {
+            tl.to(badge, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0);
+        }
+
+        const delayed = [desc, ctas, meta].filter(Boolean);
+        delayed.forEach((el, i) => {
+            tl.to(el, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.35 + i * 0.14);
+        });
+    };
+
+    return { init };
+})();
+
+
+/* ─── 8. PARALLAX (GSAP SCROLLTRIGGER) ─────────────────────── */
+const Parallax = (() => {
+    const init = () => {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+        gsap.to('.hero-container', {
+            yPercent: 28,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 0.8,
+            },
+        });
+
+        gsap.to('.hero-bg', {
+            yPercent: 14,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '#hero',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: 1.2,
+            },
+        });
+    };
+
+    return { init };
+})();
+
+
+/* ─── 9. TYPEWRITER ────────────────────────────────────────── */
+const Typewriter = (() => {
+    const phrases = [
+        'Desenvolvedor Front-End',
+        'Construtor de Interfaces',
+        'HTML · CSS · JavaScript',
+        'Foco em Experiência',
+    ];
+
+    let idx = 0, isDeleting = false, text = '', timer = null;
+    const typeSpeed = 70, deleteSpeed = 40, pauseType = 2200, pauseDelete = 400;
+
+    const tick = (el) => {
+        const full = phrases[idx];
+        text = isDeleting ? full.slice(0, text.length - 1) : full.slice(0, text.length + 1);
+        el.textContent = text;
+
+        let delay = isDeleting ? deleteSpeed : typeSpeed;
+        if (!isDeleting && text === full) { delay = pauseType; isDeleting = true; }
+        else if (isDeleting && text === '') { isDeleting = false; idx = (idx + 1) % phrases.length; delay = pauseDelete; }
+
+        timer = setTimeout(() => tick(el), delay);
+    };
+
+    const init = () => {
+        const el = document.querySelector('.typewriter');
+        if (!el) return;
+        setTimeout(() => tick(el), 2600);
+    };
+
+    return { init };
+})();
+
+
+/* ─── 10. TSPARTICLES ──────────────────────────────────────── */
+const HeroParticles = (() => {
+    const init = async () => {
+        if (typeof tsParticles === 'undefined') return;
+        const container = document.getElementById('hero-particles');
+        if (!container) return;
+
+        container.style.pointerEvents = 'all';
+
+        await tsParticles.load('hero-particles', {
+            background: { color: { value: 'transparent' } },
+            fpsLimit: 60,
+            particles: {
+                number: { value: 55, density: { enable: true, area: 900 } },
+                color: { value: '#4080f0' },
+                opacity: { value: { min: 0.1, max: 0.35 }, animation: { enable: true, speed: 0.6, sync: false } },
+                size: { value: { min: 1, max: 2.5 } },
+                move: {
+                    enable: true,
+                    speed: 0.7,
+                    direction: 'none',
+                    random: true,
+                    straight: false,
+                    outModes: 'out',
+                },
+                links: {
+                    enable: true,
+                    distance: 130,
+                    color: '#4080f0',
+                    opacity: 0.12,
+                    width: 1,
+                },
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: 'repulse' },
+                    onClick: { enable: true, mode: 'push' },
+                },
+                modes: {
+                    repulse: { distance: 90, duration: 0.4, speed: 1 },
+                    push: { quantity: 2 },
+                },
+            },
+            detectRetina: true,
+        });
+    };
+
+    return { init };
+})();
+
+
+/* ─── 11. STAT COUNTERS ────────────────────────────────────── */
+const Counters = (() => {
+    const animate = (el) => {
+        const target = parseInt(el.dataset.counter, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1400;
+        const start = performance.now();
+
+        const step = (ts) => {
+            const progress = Math.min((ts - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+        };
+
+        requestAnimationFrame(step);
+    };
+
+    const init = () => {
+        const counters = document.querySelectorAll('[data-counter]');
+        if (!counters.length) return;
+
+        new IntersectionObserver((entries) => {
+            entries.forEach((e) => {
+                if (e.isIntersecting) { animate(e.target); }
+            });
+        }, { threshold: 0.5 }).observe
+            ? counters.forEach((el) =>
+                new IntersectionObserver((entries) => {
+                    entries.forEach((e) => {
+                        if (e.isIntersecting) { animate(e.target); new IntersectionObserver(() => {}).disconnect(); }
+                    });
+                }, { threshold: 0.5 }).observe(el))
+            : null;
+    };
+
+    return { init };
+})();
+
+
+/* ─── 12. PROJECT MODAL ────────────────────────────────────── */
+const ProjectModal = (() => {
+    const modal    = document.getElementById('project-modal');
+    const closeBtn = document.getElementById('modal-close');
+    const card     = document.getElementById('card-portfolio');
+    let prevFocus  = null;
+
+    const open = () => {
+        if (!modal) return;
+        prevFocus = document.activeElement;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn?.focus();
+    };
+
+    const close = () => {
+        if (!modal) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        prevFocus?.focus();
+    };
+
+    const init = () => {
+        if (!modal) return;
+        card?.addEventListener('click', (e) => { if (!e.target.closest('a')) open(); });
+        card?.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+        closeBtn?.addEventListener('click', close);
+        modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
+    };
+
+    return { init };
+})();
+
+
+/* ─── 13. CONTACT FORM ─────────────────────────────────────── */
 const ContactForm = (() => {
-    const form = document.getElementById('contact-form');
-    const submitBtn = document.getElementById('form-submit-btn');
+    const form       = document.getElementById('contact-form');
+    const submitBtn  = document.getElementById('form-submit-btn');
     const feedbackEl = document.getElementById('form-feedback');
 
-    if (!form) return { init: () => { } };
+    if (!form) return { init: () => {} };
 
-    /** Validation rules per field */
     const validators = {
-        'contact-name': {
-            errorId: 'name-error',
-            validate: (v) => {
-                if (!v.trim()) return 'Por favor, informe seu nome.';
-                if (v.trim().length < 2) return 'Nome muito curto.';
-                return '';
-            },
-        },
-        'contact-email': {
-            errorId: 'email-error',
-            validate: (v) => {
-                if (!v.trim()) return 'Por favor, informe seu e-mail.';
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'E-mail inválido.';
-                return '';
-            },
-        },
-        'contact-subject': {
-            errorId: 'subject-error',
-            validate: (v) => (!v ? 'Selecione um assunto.' : ''),
-        },
-        'contact-message': {
-            errorId: 'message-error',
-            validate: (v) => {
-                if (!v.trim()) return 'Por favor, escreva uma mensagem.';
-                if (v.trim().length < 10) return 'Mensagem muito curta.';
-                return '';
-            },
-        },
+        'contact-name':    { validate: (v) => v.trim().length < 2 ? 'Insira seu nome.' : '', errorId: 'name-error' },
+        'contact-email':   { validate: (v) => !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? 'E-mail inválido.' : '', errorId: 'email-error' },
+        'contact-subject': { validate: (v) => !v ? 'Selecione um assunto.' : '', errorId: 'subject-error' },
+        'contact-message': { validate: (v) => v.trim().length < 10 ? 'Mensagem muito curta.' : '', errorId: 'message-error' },
     };
 
-    /**
-     * Validates a single field and updates its error message.
-     * @param {HTMLElement} field
-     * @returns {boolean} Whether the field is valid
-     */
     const validateField = (field) => {
         const rule = validators[field.id];
         if (!rule) return true;
-
-        const errorMsg = rule.validate(field.value);
-        const errorEl = document.getElementById(rule.errorId);
-
-        if (errorMsg) {
-            field.classList.add('error');
-            if (errorEl) errorEl.textContent = errorMsg;
-            return false;
-        } else {
-            field.classList.remove('error');
-            if (errorEl) errorEl.textContent = '';
-            return true;
-        }
+        const msg  = rule.validate(field.value);
+        const errEl = document.getElementById(rule.errorId);
+        field.classList.toggle('error', !!msg);
+        if (errEl) errEl.textContent = msg;
+        return !msg;
     };
 
-    /** Validate all fields and return whether the form is fully valid */
-    const validateAll = () => {
-        let isValid = true;
-        Object.keys(validators).forEach((id) => {
-            const field = document.getElementById(id);
-            if (field && !validateField(field)) isValid = false;
-        });
-        return isValid;
-    };
-
-    /**
-     * Simulates an async POST to a backend.
-     * @returns {Promise<boolean>} resolves true on success
-     */
-    const simulateSend = () =>
-        new Promise((resolve) => {
-            // ~95% success rate simulation
-            setTimeout(() => resolve(Math.random() > 0.05), 1800);
-        });
+    const validateAll = () => Object.keys(validators).every((id) => {
+        const f = document.getElementById(id);
+        return f ? validateField(f) : true;
+    });
 
     const setLoading = (loading) => {
-        const btnText = submitBtn.querySelector('.btn-text');
-        const btnLoading = submitBtn.querySelector('.btn-loading');
-
-        if (loading) {
-            btnText.setAttribute('hidden', '');
-            btnLoading.removeAttribute('hidden');
-            submitBtn.disabled = true;
-        } else {
-            btnText.removeAttribute('hidden');
-            btnLoading.setAttribute('hidden', '');
-            submitBtn.disabled = false;
-        }
+        submitBtn.querySelector('.btn-text')[loading ? 'setAttribute' : 'removeAttribute']('hidden', '');
+        submitBtn.querySelector('.btn-loading')[loading ? 'removeAttribute' : 'setAttribute']('hidden', '');
+        submitBtn.disabled = loading;
     };
 
-    const showFeedback = (type, message) => {
-        feedbackEl.textContent = message;
+    const showFeedback = (type, msg) => {
+        feedbackEl.textContent = msg;
         feedbackEl.className = `form-feedback ${type}`;
         feedbackEl.removeAttribute('hidden');
-
-        // Auto-hide after 6 seconds
-        setTimeout(() => {
-            feedbackEl.setAttribute('hidden', '');
-        }, 6000);
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        feedbackEl.setAttribute('hidden', '');
-
-        if (!validateAll()) return;
-
-        setLoading(true);
-
-        try {
-            const success = await simulateSend();
-
-            if (success) {
-                showFeedback(
-                    'success',
-                    '✅ Mensagem enviada! Em breve entrarei em contato.'
-                );
-                form.reset();
-            } else {
-                showFeedback(
-                    'error',
-                    '❌ Ops, algo deu errado. Tente novamente ou envie um e-mail direto.'
-                );
-            }
-        } catch {
-            showFeedback('error', '❌ Erro de conexão. Verifique sua internet e tente novamente.');
-        } finally {
-            setLoading(false);
-        }
+        setTimeout(() => feedbackEl.setAttribute('hidden', ''), 6000);
     };
 
     const init = () => {
-        // Real-time validation on blur
         Object.keys(validators).forEach((id) => {
-            const field = document.getElementById(id);
-            field?.addEventListener('blur', () => validateField(field));
-            // Clear error on input
-            field?.addEventListener('input', () => {
-                if (field.classList.contains('error')) validateField(field);
-            });
+            const f = document.getElementById(id);
+            f?.addEventListener('blur', () => validateField(f));
+            f?.addEventListener('input', () => { if (f.classList.contains('error')) validateField(f); });
         });
 
-        form.addEventListener('submit', handleSubmit);
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            feedbackEl.setAttribute('hidden', '');
+            if (!validateAll()) return;
+            setLoading(true);
+            try {
+                const ok = await new Promise((res) => setTimeout(() => res(Math.random() > 0.05), 1800));
+                if (ok) { showFeedback('success', '✅ Mensagem enviada! Em breve entrarei em contato.'); form.reset(); }
+                else showFeedback('error', '❌ Ops, algo deu errado. Tente novamente.');
+            } catch { showFeedback('error', '❌ Erro de conexão.'); }
+            finally { setLoading(false); }
+        });
     };
 
     return { init };
 })();
 
 
-/* ─── 10. BACK TO TOP ──────────────────────────────────────── */
-/**
- * Shows/hides the back-to-top button based on scroll position.
- */
+/* ─── 14. BACK TO TOP ──────────────────────────────────────── */
 const BackToTop = (() => {
     const btn = document.getElementById('back-to-top');
-    const THRESHOLD = 400;
-
-    const handleScroll = () => {
-        if (!btn) return;
-        if (window.scrollY > THRESHOLD) {
-            btn.removeAttribute('hidden');
-        } else {
-            btn.setAttribute('hidden', '');
-        }
-    };
-
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
     const init = () => {
         if (!btn) return;
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        btn.addEventListener('click', scrollToTop);
-        handleScroll();
+        const handle = () => btn[window.scrollY > 400 ? 'removeAttribute' : 'setAttribute']('hidden', '');
+        window.addEventListener('scroll', handle, { passive: true });
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        handle();
     };
-
     return { init };
 })();
 
 
-/* ─── 11. FOOTER YEAR ──────────────────────────────────────── */
-/**
- * Injects the current year into the footer copyright notice.
- */
+/* ─── HERO SCROLL INDICATOR ────────────────────────────────── */
+const HeroScrollIndicator = (() => {
+    const init = () => {
+        const indicator = document.querySelector('.hero-scroll');
+        if (!indicator) return;
+        window.addEventListener('scroll', () => {
+            indicator.classList.toggle('is-hidden', window.scrollY > 120);
+        }, { passive: true });
+    };
+    return { init };
+})();
+
+
+/* ─── 15. FOOTER YEAR ──────────────────────────────────────── */
 const FooterYear = (() => {
     const init = () => {
         const el = document.getElementById('footer-year');
         if (el) el.textContent = new Date().getFullYear();
     };
+    return { init };
+})();
+
+
+/* ─── 16. CUSTOM CURSOR ────────────────────────────────────── */
+const CustomCursor = (() => {
+    const dot  = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const loop = () => {
+        ringX = lerp(ringX, mouseX, 0.12);
+        ringY = lerp(ringY, mouseY, 0.12);
+        if (ring) { ring.style.left = `${ringX}px`; ring.style.top = `${ringY}px`; }
+        requestAnimationFrame(loop);
+    };
+
+    const init = () => {
+        if (!dot || !ring || window.matchMedia('(pointer: coarse)').matches) return;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            dot.style.left = `${e.clientX}px`; dot.style.top = `${e.clientY}px`;
+        });
+
+        document.addEventListener('mouseleave', () => document.body.classList.add('cursor-hidden'));
+        document.addEventListener('mouseenter', () => document.body.classList.remove('cursor-hidden'));
+
+        document.querySelectorAll('a, button, [role="button"], input, textarea, select, [data-magnetic]').forEach((el) => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+
+        loop();
+    };
 
     return { init };
 })();
 
 
-/* ─── 12. SMOOTH NAV SCROLLING ─────────────────────────────── */
-/**
- * Adds offset scroll to compensate for the fixed navbar height
- * when clicking anchor links.
- */
-const SmoothScroll = (() => {
-    const NAVBAR_HEIGHT = 72;
+/* ─── 17. MAGNETIC BUTTONS ─────────────────────────────────── */
+const MagneticButtons = (() => {
+    const STRENGTH = 0.38, RADIUS = 110;
 
     const init = () => {
-        document.querySelectorAll('a[href^="#"]').forEach((link) => {
-            link.addEventListener('click', (e) => {
-                const targetId = link.getAttribute('href').slice(1);
-                if (!targetId) return;
+        if (typeof gsap === 'undefined' || window.matchMedia('(pointer: coarse)').matches) return;
 
-                const target = document.getElementById(targetId);
-                if (!target) return;
-
-                e.preventDefault();
-
-                const top = target.getBoundingClientRect().top + window.scrollY - NAVBAR_HEIGHT;
-                window.scrollTo({ top, behavior: 'smooth' });
+        document.querySelectorAll('[data-magnetic]').forEach((btn) => {
+            btn.addEventListener('mousemove', (e) => {
+                const r = btn.getBoundingClientRect();
+                const dx = e.clientX - (r.left + r.width / 2);
+                const dy = e.clientY - (r.top + r.height / 2);
+                if (Math.sqrt(dx * dx + dy * dy) < RADIUS) {
+                    gsap.to(btn, { x: dx * STRENGTH, y: dy * STRENGTH, duration: 0.4, ease: 'power2.out' });
+                }
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
             });
         });
     };
@@ -517,42 +588,32 @@ const SmoothScroll = (() => {
 })();
 
 
-/* ─── 13. CURSOR GLOW (desktop only) ───────────────────────── */
-/**
- * Adds a subtle radial glow following the cursor on desktop.
- * Skipped on touch devices to save resources.
- */
-const CursorGlow = (() => {
-    let glowEl = null;
-
-    const create = () => {
-        glowEl = document.createElement('div');
-        glowEl.style.cssText = `
-      position: fixed;
-      pointer-events: none;
-      z-index: 9990;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, hsl(221,90%,62%,.05) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      transition: left .12s ease, top .12s ease;
-      will-change: left, top;
-    `;
-        document.body.appendChild(glowEl);
-    };
+/* ─── 18. CARD 3D TILT ─────────────────────────────────────── */
+const Card3DTilt = (() => {
+    const MAX = 8;
 
     const init = () => {
-        // Only on non-touch, larger screens
         if (window.matchMedia('(pointer: coarse)').matches) return;
-        if (window.innerWidth < 768) return;
 
-        create();
+        document.querySelectorAll('[data-tilt]').forEach((card) => {
+            const shine = document.createElement('div');
+            shine.className = 'tilt-shine';
+            card.appendChild(shine);
 
-        document.addEventListener('mousemove', (e) => {
-            if (!glowEl) return;
-            glowEl.style.left = `${e.clientX}px`;
-            glowEl.style.top = `${e.clientY}px`;
+            card.addEventListener('mousemove', (e) => {
+                const r  = card.getBoundingClientRect();
+                const dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+                const dy = (e.clientY - (r.top  + r.height / 2)) / (r.height / 2);
+                card.style.transform = `perspective(800px) rotateX(${-dy * MAX}deg) rotateY(${dx * MAX}deg) scale3d(1.02,1.02,1.02)`;
+                card.style.transition = 'transform 0.1s ease';
+                shine.style.background = `radial-gradient(circle at ${(dx+1)/2*100}% ${(dy+1)/2*100}%, rgba(255,255,255,.1) 0%, transparent 60%)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+                card.style.transition = 'transform 0.6s cubic-bezier(.23,1,.32,1)';
+                shine.style.background = '';
+            });
         });
     };
 
@@ -561,33 +622,32 @@ const CursorGlow = (() => {
 
 
 /* ─── INIT ──────────────────────────────────────────────────── */
-/**
- * Bootstrap all modules in correct order.
- */
 const App = {
     init() {
         Preloader.init();
         ThemeManager.init();
         Navbar.init();
         MobileMenu.init();
-        ScrollReveal.init();
+        SmoothScrollLenis.init();
+        AOSManager.init();
+        HeroWordSplit.init();
+        Parallax.init();
+        Typewriter.init();
+        HeroParticles.init();
         Counters.init();
-        ProjectFilter.init();
-        SkillBars.init();
+        ProjectModal.init();
         ContactForm.init();
         BackToTop.init();
+        HeroScrollIndicator.init();
         FooterYear.init();
-        SmoothScroll.init();
-        CursorGlow.init();
+        CustomCursor.init();
+        MagneticButtons.init();
+        Card3DTilt.init();
 
-        console.log(
-            '%c🚀 Portfólio de Thiago Silva — carregado com sucesso!',
-            'color: #4080f0; font-weight: bold; font-size: 13px;'
-        );
+        console.log('%c🚀 Portfólio de Thiago Silva', 'color:#4080f0;font-weight:bold;font-size:14px;');
     },
 };
 
-// Run when DOM is ready
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => App.init());
 } else {

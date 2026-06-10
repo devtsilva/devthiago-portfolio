@@ -1,41 +1,50 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description"
-        content="Portfólio de Thiago Silva — Estudante de desenvolvimento Full Stack construindo experiência por meio de projetos práticos e aprendizado contínuo." />
-    <meta name="keywords" content="desenvolvedor web, full stack, portfólio, estágio, HTML, CSS, JavaScript, Git" />
+        content="Portfólio de Thiago Silva — Desenvolvedor Front-End construindo interfaces com HTML, CSS e JavaScript." />
+    <meta name="keywords" content="desenvolvedor front-end, web, portfólio, estágio, HTML, CSS, JavaScript, Git" />
     <meta name="author" content="Thiago Silva" />
 
     <!-- Open Graph / Social -->
-    <meta property="og:title" content="Thiago Silva | Desenvolvedor Full Stack em Formação" />
+    <meta property="og:title" content="Thiago Silva | Desenvolvedor Front-End" />
     <meta property="og:description"
-        content="Estudante de desenvolvimento Full Stack construindo projetos práticos e buscando a primeira oportunidade na área de tecnologia." />
+        content="Desenvolvedor Front-End construindo interfaces com HTML, CSS e JavaScript. Aberto a oportunidades de estágio." />
     <meta property="og:type" content="website" />
 
-    <title>Thiago Silva | Desenvolvedor Full Stack em Formação</title>
+    <title>Thiago Silva | Desenvolvedor Front-End</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet" />
 
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
     <!-- Stylesheet -->
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
+    <!-- ===== CUSTOM CURSOR ===== -->
+    <div id="cursor-dot" aria-hidden="true"></div>
+    <div id="cursor-ring" aria-hidden="true"></div>
+
     <!-- ===== PRELOADER ===== -->
     <div id="preloader" aria-hidden="true">
         <div class="preloader-inner">
-            <span class="preloader-dot"></span>
-            <span class="preloader-dot"></span>
-            <span class="preloader-dot"></span>
+            <div class="preloader-logo" aria-label="Carregando">
+                <span class="pl-bracket">&lt;</span>
+                <span class="pl-name">TS</span>
+                <span class="pl-bracket">/&gt;</span>
+            </div>
+            <div class="preloader-bar"><div class="preloader-progress"></div></div>
         </div>
     </div>
 
@@ -114,147 +123,228 @@
         <section id="hero" class="hero" aria-label="Apresentação">
             <!-- Background decorativo -->
             <div class="hero-bg" aria-hidden="true">
+                <div id="shader-gradient" style="position:absolute;inset:0;z-index:0;opacity:0.55;"></div>
                 <div class="hero-grid"></div>
                 <div class="hero-glow hero-glow--1"></div>
                 <div class="hero-glow hero-glow--2"></div>
-            </div>
+                <div id="hero-particles"></div>
+                <!-- Floating code chips -->
+                <div class="code-chip code-chip--1">const dev = "Thiago"</div>
+                <div class="code-chip code-chip--2">&lt;FrontEnd /&gt;</div>
+                <div class="code-chip code-chip--3">git commit -m "feat"</div>
+                <div class="code-chip code-chip--4">display: flex;</div>
+                <div class="code-chip code-chip--5">border-radius: 8px;</div>
+                <div class="code-chip code-chip--6">npm run dev</div>
+                <div class="sg-vignette" aria-hidden="true"></div>
 
             <div class="container hero-container">
                 <!-- Badge de status -->
-                <div class="hero-badge reveal" data-delay="0">
+                <div class="hero-badge hero-animate" data-delay-gsap="0">
                     <span class="badge-dot" aria-hidden="true"></span>
-                    <span>Disponível para estágio</span>
+                    <span>Aberto a oportunidades de estágio</span>
                 </div>
 
-                <!-- Texto principal -->
-                <h1 class="hero-title reveal" data-delay="100">
-                    Olá, sou <span class="text-gradient">Thiago</span><br />
-                    <span class="hero-title--sub">Desenvolvedor Full Stack em Formação</span>
+                <!-- Texto principal — palavras separadas para animação -->
+                <h1 class="hero-title">
+                    <span class="word-wrap"><span class="word">Olá,</span></span>&#32;<span class="word-wrap"><span class="word">sou</span></span>&#32;<span class="word-wrap"><span class="word text-gradient">Thiago</span></span>
+                    <br />
+                    <span class="hero-title--sub">
+                        <span class="typewriter" aria-live="polite"></span><span class="typewriter-cursor" aria-hidden="true">|</span>
+                    </span>
                 </h1>
 
-                <p class="hero-description reveal" data-delay="200">
-                    Estudando desenvolvimento Full Stack e criando projetos práticos para
-                    construir experiência e evoluir como desenvolvedor.
+                <p class="hero-description hero-animate" data-delay-gsap="2">
+                    Construo interfaces com HTML, CSS e JavaScript — com atenção
+                    aos detalhes, código limpo e foco na experiência do usuário.
                 </p>
 
                 <!-- CTAs -->
-                <div class="hero-ctas reveal" data-delay="300">
-                    <a href="#projects" class="btn btn--primary btn--lg" id="hero-cta-projects">
-                        Ver Projetos
+                <div class="hero-ctas hero-animate" data-delay-gsap="3">
+                    <a href="#projects" class="btn btn--primary btn--lg" id="hero-cta-projects" data-magnetic>
+                        Ver projeto
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="M5 12h14M12 5l7 7-7 7" />
                         </svg>
                     </a>
-                    <a href="#contact" class="btn btn--ghost btn--lg" id="hero-cta-contact">Entrar em contato</a>
+                    <a href="#contact" class="btn btn--ghost btn--lg" id="hero-cta-contact" data-magnetic>Entrar em contato</a>
                 </div>
 
-                <!-- Social links -->
-                <div class="hero-socials reveal" data-delay="400">
-                    <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer" class="social-link"
-                        aria-label="GitHub">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path
-                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                        </svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/thiago-silva-416967407/" target="_blank"
-                        rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                            <path
-                                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg>
-                    </a>
-                    <a href="mailto:devthiagosilva.br@gmail.com" class="social-link" aria-label="E-mail">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                <!-- Meta strip -->
+                <div class="hero-meta hero-animate" data-delay-gsap="4">
+                    <span class="hero-meta__item">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                            <polyline points="22,6 12,13 2,6" />
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
                         </svg>
+                        Fortaleza, CE
+                    </span>
+                    <span class="hero-meta__sep" aria-hidden="true">·</span>
+                    <span class="hero-meta__item">HTML &bull; CSS &bull; JavaScript</span>
+                    <span class="hero-meta__sep" aria-hidden="true">·</span>
+                    <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
+                        class="hero-meta__item hero-meta__link">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                        github.com/devtsilva
                     </a>
                 </div>
             </div>
 
             <!-- Scroll indicator -->
-            <div class="scroll-indicator" aria-hidden="true">
-                <div class="scroll-mouse">
-                    <div class="scroll-wheel"></div>
-                </div>
-                <span class="scroll-text">scroll</span>
-            </div>
+            <a href="#about" class="hero-scroll" aria-label="Rolar para a próxima seção">
+                <span class="hero-scroll__mouse">
+                    <span class="hero-scroll__wheel"></span>
+                </span>
+            </a>
         </section>
 
         <!-- ===== SOBRE MIM ===== -->
         <section id="about" class="about section" aria-labelledby="about-heading">
             <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-tag">// sobre mim</span>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">01 // sobre mim</span>
                     <h2 id="about-heading" class="section-title">Quem sou eu</h2>
                 </div>
 
                 <div class="about-grid">
-                    <!-- Avatar / Visual -->
-                    <div class="about-visual reveal" data-delay="100">
-                        <div class="about-avatar" aria-hidden="true">
-                            <div class="avatar-ring avatar-ring--outer"></div>
-                            <div class="avatar-ring avatar-ring--inner"></div>
-                            <div class="avatar-initials">TS</div>
-                            <!-- Floating tech badges -->
-                            <div class="avatar-badge avatar-badge--html" title="HTML5">H</div>
-                            <div class="avatar-badge avatar-badge--css" title="CSS3">C</div>
-                            <div class="avatar-badge avatar-badge--js" title="JavaScript">JS</div>
-                            <div class="avatar-badge avatar-badge--git" title="Git">G</div>
+                    <!-- Code card visual -->
+                    <div class="about-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="about-code-card" aria-hidden="true">
+                            <div class="acc-header">
+                                <span class="acc-dot acc-dot--red"></span>
+                                <span class="acc-dot acc-dot--yellow"></span>
+                                <span class="acc-dot acc-dot--green"></span>
+                                <span class="acc-filename">about-me.js</span>
+                            </div>
+                            <div class="acc-body">
+                                <div class="acc-line"><span class="acc-kw">const</span> <span class="acc-var">dev</span> <span class="acc-op">=</span> {</div>
+                                <div class="acc-line acc-indent"><span class="acc-prop">nome</span><span class="acc-op">:</span> <span class="acc-str">"Thiago Silva"</span>,</div>
+                                <div class="acc-line acc-indent"><span class="acc-prop">cidade</span><span class="acc-op">:</span> <span class="acc-str">"Fortaleza, CE"</span>,</div>
+                                <div class="acc-line acc-indent"><span class="acc-prop">foco</span><span class="acc-op">:</span> <span class="acc-str">"Front-End Dev"</span>,</div>
+                                <div class="acc-line acc-indent"><span class="acc-prop">stack</span><span class="acc-op">:</span> [</div>
+                                <div class="acc-line acc-indent2"><span class="acc-str">"HTML"</span><span class="acc-op">,</span> <span class="acc-str">"CSS"</span><span class="acc-op">,</span></div>
+                                <div class="acc-line acc-indent2"><span class="acc-str">"JavaScript"</span><span class="acc-op">,</span> <span class="acc-str">"Git"</span></div>
+                                <div class="acc-line acc-indent">]<span class="acc-op">,</span></div>
+                                <div class="acc-line acc-indent"><span class="acc-prop">status</span><span class="acc-op">:</span> <span class="acc-str">"Aberto a estágio"</span><span class="acc-op">,</span></div>
+                                <div class="acc-line acc-indent"><span class="acc-prop">paixao</span><span class="acc-op">:</span> <span class="acc-str">"UX + Clean Code"</span></div>
+                                <div class="acc-line">};<span class="acc-cursor"></span></div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Texto -->
-                    <div class="about-content reveal" data-delay="200">
+                    <div class="about-content" data-aos="fade-left" data-aos-delay="200">
                         <p class="about-text">
-                            Sou o Thiago, estudante de desenvolvimento Full Stack apaixonado por
-                            tecnologia e pela construção de coisas que funcionam de verdade.
-                            Estou em constante aprendizado, explorando <strong>HTML, CSS, JavaScript e Git</strong>
-                            por meio de projetos práticos e desafios do dia a dia.
+                            Sou o Thiago, desenvolvedor Front-End apaixonado por construir interfaces que funcionam de verdade.
+                            Tenho me dedicado intensamente ao estudo de <strong>HTML, CSS e JavaScript</strong>, colocando
+                            cada conceito em prática por meio de projetos reais.
                         </p>
                         <p class="about-text">
-                            Acredito que a melhor forma de evoluir é <strong>colocar a mão no código</strong>.
-                            Por isso, cada projeto que construo é uma oportunidade de consolidar o que aprendi
-                            e descobrir o que ainda preciso dominar.
-                        </p>
-                        <p class="about-text">
-                            Meu objetivo agora é conquistar minha <strong>primeira oportunidade de estágio</strong>
-                            na área de tecnologia, onde possa contribuir, aprender com profissionais experientes
-                            e crescer dentro de um ambiente real de desenvolvimento.
+                            Acredito que a melhor forma de aprender é <strong>construindo</strong> — por isso cada linha de código
+                            que escrevo é uma oportunidade de evoluir e me aproximar da minha primeira oportunidade profissional.
                         </p>
 
-                        <a href="#contact" class="btn btn--primary" id="about-cta">Vamos conversar</a>
+                        <!-- Quote -->
+                        <blockquote class="about-quote" data-aos="fade-up" data-aos-delay="300">
+                            <span class="about-quote__mark" aria-hidden="true">"</span>
+                            <p class="about-quote__text">Código é a linguagem que uso para transformar problemas em soluções.</p>
+                        </blockquote>
+
+                        <!-- CTAs -->
+                        <div class="about-ctas" data-aos="fade-up" data-aos-delay="400">
+                            <a href="https://drive.google.com/drive/folders/" target="_blank" rel="noopener noreferrer"
+                                class="btn btn--primary" id="about-cta-cv">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Download CV
+                            </a>
+                            <a href="#contact" class="btn btn--ghost" id="about-cta">Vamos conversar</a>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Stat Cards -->
+                <div class="about-stats" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card">
+                        <div class="stat-card__icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                            </svg>
+                        </div>
+                        <div class="stat-card__value" data-counter="1">0</div>
+                        <div class="stat-card__label">Projeto ao vivo</div>
+                        <div class="stat-card__desc">Em produção no Vercel</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                        </div>
+                        <div class="stat-card__value" data-counter="5" data-suffix="+">0</div>
+                        <div class="stat-card__label">Tecnologias</div>
+                        <div class="stat-card__desc">HTML · CSS · JS · Git</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__icon" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <div class="stat-card__value" data-counter="6" data-suffix="m+">0</div>
+                        <div class="stat-card__label">Dedicados</div>
+                        <div class="stat-card__desc">Commits diários</div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- ===== PROJETOS ===== -->
         <section id="projects" class="projects section" aria-labelledby="projects-heading">
             <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-tag">// projetos</span>
-                    <h2 id="projects-heading" class="section-title">O que estou construindo</h2>
-                    <p class="section-subtitle">Projetos pessoais desenvolvidos para praticar e consolidar o
-                        aprendizado.</p>
-                </div>
-
-                <!-- Filtros -->
-                <div class="project-filters reveal" role="group" aria-label="Filtrar projetos">
-                    <button class="filter-btn filter-btn--active" data-filter="all" id="filter-all">Todos</button>
-                    <button class="filter-btn" data-filter="concluido" id="filter-concluido">Concluído</button>
-                    <button class="filter-btn" data-filter="planejado" id="filter-planejado">Planejado</button>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">02 // projetos</span>
+                    <h2 id="projects-heading" class="section-title">O que já construí</h2>
+                    <p class="section-subtitle">Projetos desenvolvidos com dedicação e atenção aos detalhes.</p>
                 </div>
 
                 <!-- Grid de projetos -->
-                <div class="projects-grid" id="projects-grid">
+                <div class="projects-grid projects-grid--centered" id="projects-grid">
 
                     <!-- Projeto 1: Portfólio Pessoal -->
-                    <article class="project-card reveal" data-delay="0" data-category="concluido"
-                        aria-label="Projeto Portfólio Pessoal">
+                    <article class="project-card project-card--featured" data-aos="fade-up" data-aos-delay="100"
+                        data-category="concluido" aria-label="Projeto Portfólio Pessoal"
+                        id="card-portfolio" role="button" tabindex="0" data-tilt>
+                        <!-- Browser preview mockup -->
+                        <div class="project-card__preview" aria-hidden="true">
+                            <div class="pcp-bar">
+                                <span class="pcp-dot pcp-dot--red"></span>
+                                <span class="pcp-dot pcp-dot--yellow"></span>
+                                <span class="pcp-dot pcp-dot--green"></span>
+                                <span class="pcp-url">devthiago-portfolio.vercel.app</span>
+                            </div>
+                            <div class="pcp-screen">
+                                <div class="pcp-grid-bg"></div>
+                                <div class="pcp-glow"></div>
+                                <div class="pcp-content">
+                                    <div class="pcp-badge"></div>
+                                    <div class="pcp-title"></div>
+                                    <div class="pcp-sub"></div>
+                                    <div class="pcp-ctas">
+                                        <div class="pcp-btn-primary"></div>
+                                        <div class="pcp-btn-ghost"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="project-card__header">
                             <div class="project-card__icon" aria-hidden="true">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -264,11 +354,19 @@
                                 </svg>
                             </div>
                             <div class="project-card__links">
+                                <a href="https://devthiago-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                    class="project-icon-link" aria-label="Ver demo ao vivo — Portfólio Pessoal">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                </a>
                                 <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
                                     class="project-icon-link" aria-label="Ver código no GitHub — Portfólio Pessoal">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                                        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
                                     </svg>
                                 </a>
                             </div>
@@ -276,201 +374,76 @@
                         <div class="project-card__body">
                             <h3 class="project-card__title">Portfólio Pessoal</h3>
                             <p class="project-card__description">
-                                Site pessoal desenvolvido para apresentar minha trajetória, projetos e habilidades.
-                                Construído com HTML, CSS e JavaScript puro, com modo escuro/claro e design responsivo.
+                                Site pessoal desenvolvido do zero com HTML, CSS e JavaScript puro — dark/light mode,
+                                animações de scroll, menu responsivo e formulário com validação em tempo real.
+                                <span class="project-card__hint">Clique para ver detalhes →</span>
                             </p>
                             <div class="project-card__tags">
                                 <span class="tag">HTML5</span>
                                 <span class="tag">CSS3</span>
                                 <span class="tag">JavaScript</span>
                                 <span class="tag">Git</span>
+                                <span class="tag">Responsivo</span>
                             </div>
                         </div>
                         <div class="project-card__footer">
                             <span class="project-status project-status--live">
                                 <span class="status-dot" aria-hidden="true"></span>
-                                Concluído
+                                Ao vivo
                             </span>
-                        </div>
-                    </article>
-
-                    <!-- Projeto 2: Calculadora Web -->
-                    <article class="project-card reveal" data-delay="100" data-category="planejado"
-                        aria-label="Projeto Calculadora Web">
-                        <div class="project-card__header">
-                            <div class="project-card__icon" aria-hidden="true">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="4" y="2" width="16" height="20" rx="2" />
-                                    <line x1="8" y1="6" x2="16" y2="6" />
-                                    <line x1="8" y1="10" x2="16" y2="10" />
-                                    <line x1="8" y1="14" x2="12" y2="14" />
+                            <a href="https://devthiago-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="btn btn--outline btn--sm">
+                                Ver projeto
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                    <polyline points="15 3 21 3 21 9" />
+                                    <line x1="10" y1="14" x2="21" y2="3" />
                                 </svg>
-                            </div>
-                            <div class="project-card__links">
-                                <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
-                                    class="project-icon-link" aria-label="Ver repositório no GitHub">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="project-card__body">
-                            <h3 class="project-card__title">Calculadora Web</h3>
-                            <p class="project-card__description">
-                                Calculadora simples desenvolvida com HTML, CSS e JavaScript para praticar
-                                manipulação do DOM, lógica de operações e estilização de interfaces interativas.
-                            </p>
-                            <div class="project-card__tags">
-                                <span class="tag">HTML5</span>
-                                <span class="tag">CSS3</span>
-                                <span class="tag">JavaScript</span>
-                            </div>
-                        </div>
-                        <div class="project-card__footer">
-                            <span class="project-status project-status--wip">
-                                <span class="status-dot" aria-hidden="true"></span>
-                                Planejado
-                            </span>
-                        </div>
-                    </article>
-
-                    <!-- Projeto 3: To-Do List -->
-                    <article class="project-card reveal" data-delay="200" data-category="planejado"
-                        aria-label="Projeto Lista de Tarefas">
-                        <div class="project-card__header">
-                            <div class="project-card__icon" aria-hidden="true">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M9 11l3 3L22 4" />
-                                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
-                                </svg>
-                            </div>
-                            <div class="project-card__links">
-                                <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
-                                    class="project-icon-link" aria-label="Ver repositório no GitHub">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="project-card__body">
-                            <h3 class="project-card__title">Lista de Tarefas — To-Do List</h3>
-                            <p class="project-card__description">
-                                Aplicação de lista de tarefas para praticar manipulação do DOM com JavaScript,
-                                adição e remoção de itens e noções de persistência de dados no navegador.
-                            </p>
-                            <div class="project-card__tags">
-                                <span class="tag">HTML5</span>
-                                <span class="tag">CSS3</span>
-                                <span class="tag">JavaScript</span>
-                            </div>
-                        </div>
-                        <div class="project-card__footer">
-                            <span class="project-status project-status--wip">
-                                <span class="status-dot" aria-hidden="true"></span>
-                                Planejado
-                            </span>
-                        </div>
-                    </article>
-
-                    <!-- Projeto 4: Landing Page Responsiva -->
-                    <article class="project-card reveal" data-delay="300" data-category="planejado"
-                        aria-label="Projeto Landing Page Responsiva">
-                        <div class="project-card__header">
-                            <div class="project-card__icon" aria-hidden="true">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" />
-                                    <line x1="8" y1="21" x2="16" y2="21" />
-                                    <line x1="12" y1="17" x2="12" y2="21" />
-                                </svg>
-                            </div>
-                            <div class="project-card__links">
-                                <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
-                                    class="project-icon-link" aria-label="Ver repositório no GitHub">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="project-card__body">
-                            <h3 class="project-card__title">Landing Page Responsiva</h3>
-                            <p class="project-card__description">
-                                Página de apresentação responsiva criada para praticar layout com Flexbox e Grid,
-                                boas práticas de HTML semântico e adaptação a diferentes tamanhos de tela.
-                            </p>
-                            <div class="project-card__tags">
-                                <span class="tag">HTML5</span>
-                                <span class="tag">CSS3</span>
-                                <span class="tag">Flexbox</span>
-                                <span class="tag">Grid</span>
-                            </div>
-                        </div>
-                        <div class="project-card__footer">
-                            <span class="project-status project-status--wip">
-                                <span class="status-dot" aria-hidden="true"></span>
-                                Planejado
-                            </span>
-                        </div>
-                    </article>
-
-                    <!-- Projeto 5: Aplicação com API -->
-                    <article class="project-card reveal" data-delay="400" data-category="planejado"
-                        aria-label="Projeto Aplicação com API">
-                        <div class="project-card__header">
-                            <div class="project-card__icon" aria-hidden="true">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 20V10M12 20V4M6 20v-6" />
-                                </svg>
-                            </div>
-                            <div class="project-card__links">
-                                <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
-                                    class="project-icon-link" aria-label="Ver repositório no GitHub">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                                    </svg>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="project-card__body">
-                            <h3 class="project-card__title">Aplicação com API</h3>
-                            <p class="project-card__description">
-                                Projeto para aprender a consumir APIs públicas com JavaScript, utilizando
-                                <code>fetch</code> para buscar e exibir dados dinâmicos em uma interface web.
-                            </p>
-                            <div class="project-card__tags">
-                                <span class="tag">JavaScript</span>
-                                <span class="tag">Fetch API</span>
-                                <span class="tag">HTML5</span>
-                                <span class="tag">CSS3</span>
-                            </div>
-                        </div>
-                        <div class="project-card__footer">
-                            <span class="project-status project-status--wip">
-                                <span class="status-dot" aria-hidden="true"></span>
-                                Planejado
-                            </span>
+                            </a>
                         </div>
                     </article>
 
                 </div><!-- /projects-grid -->
+
+                <!-- Em desenvolvimento -->
+                <div class="projects-upcoming" data-aos="fade-up" data-aos-delay="200">
+                    <div class="projects-upcoming__header">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                        <span>Em desenvolvimento</span>
+                    </div>
+                    <ul class="projects-upcoming__list" role="list">
+                        <li class="projects-upcoming__item">
+                            <span class="projects-upcoming__dot" aria-hidden="true"></span>
+                            <span>Calculadora Web — manipulação do DOM e lógica de operações</span>
+                        </li>
+                        <li class="projects-upcoming__item">
+                            <span class="projects-upcoming__dot" aria-hidden="true"></span>
+                            <span>To-Do List — persistência de dados com localStorage</span>
+                        </li>
+                        <li class="projects-upcoming__item">
+                            <span class="projects-upcoming__dot" aria-hidden="true"></span>
+                            <span>Landing Page Responsiva — Flexbox, Grid e HTML semântico</span>
+                        </li>
+                        <li class="projects-upcoming__item">
+                            <span class="projects-upcoming__dot" aria-hidden="true"></span>
+                            <span>Aplicação com API pública — fetch e renderização dinâmica</span>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
         </section>
 
         <!-- ===== SKILLS ===== -->
         <section id="skills" class="skills section" aria-labelledby="skills-heading">
             <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-tag">// habilidades</span>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">03 // habilidades</span>
                     <h2 id="skills-heading" class="section-title">Stack & Ferramentas</h2>
                     <p class="section-subtitle">Tecnologias que estou estudando e utilizando nos meus projetos.</p>
                 </div>
@@ -478,65 +451,93 @@
                 <div class="skills-chips-wrapper">
 
                     <!-- Tecnologias -->
-                    <div class="skills-group reveal" data-delay="100">
+                    <div class="skills-group" data-aos="fade-up" data-aos-delay="100">
                         <h3 class="skills-group-title">Linguagens & Tecnologias</h3>
                         <div class="skills-grid">
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">🌐</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#E34F26"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.23-2.622L5.412 4.41l.698 8.01h9.126l-.326 3.426-2.91.804-2.955-.81-.188-2.11H6.248l.33 4.171L12 19.351l5.379-1.443.744-8.157H8.531z"/></svg>
+                                </span>
                                 <span>HTML5</span>
                             </div>
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">🎨</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#1572B6"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.288l5.373-1.53L18.59 4.414z"/></svg>
+                                </span>
                                 <span>CSS3</span>
                             </div>
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">⚡</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#F7DF1E"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg>
+                                </span>
                                 <span>JavaScript</span>
                             </div>
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">📐</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="color:var(--color-accent)"><path d="M2.002 9.235c-.01.13-.014.26-.014.39v4.75c0 .271.021.538.063.799l4.04-2.66zM22 9.615l-4.088 2.88 4.088 2.679c.042-.261.063-.528.063-.799v-4.75c0-.13-.005-.26-.014-.39zM12.38 13.107l-3.862-2.56-.002 5.137 9.934-6.53-2.196-1.44z"/><path d="M21.32 7.788L12 14.106 2.68 7.788C3.476 6.113 5.163 5 7.107 5h9.787c1.943 0 3.63 1.113 4.427 2.788z"/><path d="M2.614 9.235L2.6 9.39v4.75c0 .27.02.536.063.797l4.04-2.658-4.09-2.043z"/></svg>
+                                </span>
                                 <span>Flexbox & Grid</span>
                             </div>
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">📱</span>
-                                <span>Design Responsivo</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-accent)"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/><path d="M8 6h8M8 10h8M8 14h4"/></svg>
+                                </span>
+                                <span>Responsivo</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Ferramentas -->
-                    <div class="skills-group reveal" data-delay="200">
+                    <div class="skills-group" data-aos="fade-up" data-aos-delay="200">
                         <h3 class="skills-group-title">Ferramentas</h3>
                         <div class="skills-grid">
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">🔧</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#F05032"><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.658 2.66c.645-.223 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.719.719-1.881.719-2.6 0-.539-.541-.674-1.337-.404-1.996L12.86 8.955v6.525c.176.086.342.203.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.609-.405-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg>
+                                </span>
                                 <span>Git</span>
                             </div>
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">🐙</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                                </span>
                                 <span>GitHub</span>
                             </div>
                             <div class="skill-chip">
-                                <span class="skill-chip__icon" aria-hidden="true">💻</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#007ACC"><path d="M23.15 2.587L18.21.21a1.494 1.494 0 0 0-1.705.29l-9.46 8.63-4.12-3.128a.999.999 0 0 0-1.276.057L.327 7.261A1 1 0 0 0 .326 8.74L3.899 12 .326 15.26a1 1 0 0 0 .001 1.479L1.65 17.94a.999.999 0 0 0 1.276.057l4.12-3.128 9.46 8.63a1.492 1.492 0 0 0 1.704.29l4.942-2.377A1.5 1.5 0 0 0 24 19.88V4.12a1.5 1.5 0 0 0-.85-1.533zm-5.146 14.861L10.826 12l7.178-5.448v10.896z"/></svg>
+                                </span>
                                 <span>VS Code</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Aprendendo -->
-                    <div class="skills-group reveal" data-delay="300">
-                        <h3 class="skills-group-title">Estudando em seguida</h3>
+                    <div class="skills-group" data-aos="fade-up" data-aos-delay="300">
+                        <h3 class="skills-group-title">Aprendendo a seguir</h3>
                         <div class="skills-grid">
                             <div class="skill-chip skill-chip--learning">
-                                <span class="skill-chip__icon" aria-hidden="true">📚</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#61DAFB"><path d="M14.23 12.004a2.236 2.236 0 0 1-2.235 2.236 2.236 2.236 0 0 1-2.236-2.236 2.236 2.236 0 0 1 2.235-2.236 2.236 2.236 0 0 1 2.236 2.236zm2.648-10.69c-1.346 0-3.107.96-4.888 2.622-1.78-1.653-3.542-2.602-4.887-2.602-.41 0-.783.093-1.106.278-1.375.793-1.683 3.264-.973 6.365C1.98 8.917 0 10.42 0 12.004c0 1.59 1.99 3.097 5.043 4.03-.704 3.113-.39 5.588.988 6.38.32.187.69.275 1.102.275 1.345 0 3.107-.96 4.888-2.624 1.78 1.654 3.542 2.603 4.887 2.603.41 0 .783-.09 1.106-.275 1.374-.792 1.683-3.263.973-6.365C22.02 15.096 24 13.59 24 12.004c0-1.59-1.99-3.097-5.043-4.032.704-3.11.39-5.587-.988-6.38-.318-.184-.688-.277-1.092-.278zm-.005 1.09v.006c.225 0 .406.044.558.127.666.382.955 1.835.73 3.704-.054.46-.142.945-.25 1.44-.96-.236-2.006-.417-3.107-.534-.66-.905-1.345-1.727-2.035-2.447 1.592-1.48 3.087-2.292 4.105-2.295zm-9.77.02c1.012 0 2.514.808 4.11 2.28-.686.72-1.37 1.537-2.02 2.442-1.107.117-2.154.298-3.113.538-.112-.49-.195-.964-.254-1.42-.23-1.868.054-3.32.714-3.707.19-.09.4-.127.563-.132zm4.882 3.05c.455.468.91.992 1.36 1.564-.44-.02-.89-.034-1.345-.034-.46 0-.915.01-1.36.034.44-.572.895-1.096 1.345-1.565zM12 8.1c.74 0 1.477.034 2.202.093.406.582.802 1.203 1.183 1.86.372.64.71 1.29 1.018 1.946-.308.655-.646 1.31-1.013 1.95-.38.66-.773 1.288-1.18 1.87-.728.063-1.466.098-2.21.098-.74 0-1.477-.035-2.202-.093-.406-.582-.802-1.204-1.183-1.86-.372-.64-.71-1.29-1.018-1.946.303-.657.646-1.313 1.013-1.954.38-.66.773-1.286 1.18-1.868.728-.064 1.466-.098 2.21-.098zm-3.635.254c-.24.377-.48.763-.704 1.16-.225.39-.435.782-.635 1.174-.265-.656-.49-1.31-.676-1.947.64-.15 1.315-.283 2.015-.386zm7.26 0c.695.103 1.365.23 2.006.387-.18.632-.405 1.282-.66 1.933-.2-.39-.41-.783-.64-1.174-.225-.392-.465-.774-.705-1.146zm3.063.675c.484.15.944.317 1.375.498 1.732.74 2.852 1.708 2.852 2.476-.005.768-1.125 1.74-2.857 2.475-.42.18-.88.342-1.355.493-.28-.958-.646-1.956-1.1-2.98.45-1.017.81-2.01 1.085-2.964zm-13.395.004c.278.96.645 1.957 1.1 2.98-.45 1.017-.812 2.01-1.086 2.964-.484-.15-.944-.318-1.37-.5-1.732-.737-2.852-1.706-2.852-2.474 0-.768 1.12-1.742 2.852-2.476.42-.18.88-.342 1.356-.494zm11.678 4.28c.265.657.49 1.312.676 1.948-.64.150-1.315.283-2.015.386.24-.375.48-.762.705-1.158.225-.39.435-.782.634-1.176zm-9.945.02c.2.392.41.783.64 1.175.23.39.465.772.705 1.143-.695-.102-1.365-.23-2.006-.386.18-.63.406-1.282.66-1.933zM17.92 16.32c.112.493.2.968.254 1.423.23 1.868-.054 3.32-.714 3.708-.147.09-.338.128-.563.128-1.012 0-2.514-.807-4.11-2.28.686-.72 1.37-1.536 2.02-2.44 1.107-.118 2.154-.3 3.113-.54zm-12.56.022c.96.234 2.006.415 3.107.532.66.905 1.345 1.727 2.035 2.446-1.595 1.483-3.092 2.295-4.11 2.295-.22-.005-.406-.05-.553-.132-.666-.38-.955-1.834-.73-3.703.054-.46.142-.944.25-1.438zm4.56.64c.44.02.89.034 1.345.034.46 0 .915-.01 1.36-.034-.44.572-.895 1.095-1.345 1.565-.455-.47-.91-.993-1.36-1.565z"/></svg>
+                                </span>
                                 <span>React</span>
                             </div>
                             <div class="skill-chip skill-chip--learning">
-                                <span class="skill-chip__icon" aria-hidden="true">📚</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#3178C6"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.404-.601-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179z"/></svg>
+                                </span>
+                                <span>TypeScript</span>
+                            </div>
+                            <div class="skill-chip skill-chip--learning">
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="#339933"><path d="M11.998.016C5.373.016.007 5.382.007 12.007c0 6.623 5.366 11.989 11.991 11.989 6.622 0 11.989-5.366 11.989-11.989C23.987 5.382 18.62.016 11.998.016zM6.084 17.805a.807.807 0 0 1-.65-.404l-.35-.602c-.022-.037-.037-.077-.044-.119l-.003-.058.003-.055.011-.051.021-.047.031-.043.041-.038.05-.031.059-.024.066-.015.074-.006.082.006.087.017.091.031.091.044.089.057.08.067.07.074.055.078.038.079.019.075-.002.068-.023.057-.044.042-.065.024zm5.83-4.613c-.146.19-.303.374-.469.547l-.487.511-.504.476c-.172.156-.348.306-.526.448l-.516.387-.5.323-.476.258-.446.19-.41.12-.367.05-.316-.022-.258-.094-.197-.166-.134-.236-.07-.302-.006-.363.057-.42.121-.471.183-.516.242-.557.298-.592.352-.621.403-.644.451-.662.497-.674.54-.68.58-.681.618-.676.653-.665.685-.649.713-.628.738-.603.759-.573.777-.539.79-.5.8-.457.806-.411.808-.361.806-.307.799-.251.787-.19.771-.127.75-.062.724.004.695.07.661.136.623.2.58.263.534.322.484.379.43.431.373.48.313.524.249.564.183.598.115.628.047.651-.019.668-.082.678-.144.682-.204.68-.26.671-.313.657-.362.638-.407.614-.449.584z"/></svg>
+                                </span>
                                 <span>Node.js</span>
                             </div>
                             <div class="skill-chip skill-chip--learning">
-                                <span class="skill-chip__icon" aria-hidden="true">📚</span>
+                                <span class="skill-chip__icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-accent)"><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-30 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(30 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+                                </span>
                                 <span>SQL</span>
                             </div>
                         </div>
@@ -549,8 +550,8 @@
         <!-- ===== CONTATO ===== -->
         <section id="contact" class="contact section" aria-labelledby="contact-heading">
             <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-tag">// contato</span>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-tag">04 // contato</span>
                     <h2 id="contact-heading" class="section-title">Vamos conversar?</h2>
                     <p class="section-subtitle">
                         Estou buscando minha primeira oportunidade de estágio na área de tecnologia.<br />
@@ -560,7 +561,7 @@
 
                 <div class="contact-grid">
                     <!-- Info de contato -->
-                    <div class="contact-info reveal" data-delay="100">
+                    <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
                         <div class="contact-info-item">
                             <div class="contact-info-icon" aria-hidden="true">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -626,7 +627,7 @@
                     </div>
 
                     <!-- Formulário -->
-                    <div class="contact-form-wrapper reveal" data-delay="200">
+                    <div class="contact-form-wrapper" data-aos="fade-left" data-aos-delay="200">
                         <form id="contact-form" class="contact-form" novalidate aria-label="Formulário de contato">
                             <div class="form-group">
                                 <label for="contact-name" class="form-label">Nome completo</label>
@@ -688,13 +689,52 @@
     <!-- ===== FOOTER ===== -->
     <footer class="footer" role="contentinfo">
         <div class="container footer-container">
-            <div class="footer-divider" aria-hidden="true"></div>
-            <div class="footer-bottom footer-bottom--center">
-                <p class="footer-copy">
-                    © <span id="footer-year"></span> Thiago Silva &bull; Em constante evolução como desenvolvedor Full
-                    Stack
-                </p>
+
+            <!-- CTA principal -->
+            <div class="footer-cta">
+                <p class="footer-cta__text">Tem um projeto ou oportunidade?</p>
+                <a href="#contact" class="btn btn--primary">Vamos conversar</a>
             </div>
+
+            <div class="footer-divider" aria-hidden="true"></div>
+
+            <div class="footer-bottom">
+                <!-- Logo -->
+                <a href="#hero" class="nav-logo footer-logo" aria-label="Ir para o início">
+                    <span class="logo-bracket">&lt;</span>
+                    <span class="logo-name">TS</span>
+                    <span class="logo-bracket">/&gt;</span>
+                </a>
+
+                <!-- Copyright -->
+                <p class="footer-copy">
+                    © <span id="footer-year"></span> Thiago Silva &mdash; Fortaleza, CE
+                </p>
+
+                <!-- Social links -->
+                <div class="footer-socials">
+                    <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer"
+                        class="footer-social-link" aria-label="GitHub">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/thiago-silva-416967407/" target="_blank"
+                        rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                    </a>
+                    <a href="mailto:devthiagosilva.br@gmail.com" class="footer-social-link" aria-label="E-mail">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
         </div>
     </footer>
 
@@ -706,8 +746,248 @@
         </svg>
     </button>
 
+    <!-- ===== PROJECT MODAL ===== -->
+    <div id="project-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close" aria-label="Fechar modal">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <div class="modal-header">
+                <div class="modal-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+                    </svg>
+                </div>
+                <h3 class="modal-title" id="modal-title">Portfólio Pessoal</h3>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Site pessoal desenvolvido do zero com HTML, CSS e JavaScript puro — com sistema de tema escuro/claro, animações de scroll com IntersectionObserver, menu mobile responsivo, cursor glow e formulário de contato com validação em tempo real.</p>
+                <div class="modal-section">
+                    <h4 class="modal-section__title">Funcionalidades</h4>
+                    <ul class="modal-features" role="list">
+                        <li class="modal-feature"><span class="modal-feature__dot" aria-hidden="true"></span>Tema escuro/claro com persistência em localStorage</li>
+                        <li class="modal-feature"><span class="modal-feature__dot" aria-hidden="true"></span>Scroll reveal com IntersectionObserver (sem biblioteca)</li>
+                        <li class="modal-feature"><span class="modal-feature__dot" aria-hidden="true"></span>Menu mobile com animação e trap de foco acessível</li>
+                        <li class="modal-feature"><span class="modal-feature__dot" aria-hidden="true"></span>Formulário com validação em tempo real e feedback visual</li>
+                        <li class="modal-feature"><span class="modal-feature__dot" aria-hidden="true"></span>Cursor glow interativo no desktop</li>
+                        <li class="modal-feature"><span class="modal-feature__dot" aria-hidden="true"></span>Design responsivo para mobile, tablet e desktop</li>
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h4 class="modal-section__title">Stack utilizada</h4>
+                    <div class="modal-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">AOS</span>
+                        <span class="tag">GSAP</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="https://devthiago-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+                    Ver ao vivo
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/devtsilva" target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
+                    Ver código
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- tsParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js"></script>
+    <!-- AOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <!-- ShaderGradient WebGL -->
+    <script>
+    (() => {
+        const container = document.getElementById('shader-gradient');
+        if (!container) return;
+
+        const canvas = document.createElement('canvas');
+        canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;display:block;';
+        container.appendChild(canvas);
+
+        const gl = canvas.getContext('webgl', { antialias: false, alpha: false });
+        if (!gl) return;
+
+        const vert = `
+            attribute vec2 aPos;
+            varying vec2 vUv;
+            void main(){
+                vUv = aPos * .5 + .5;
+                gl_Position = vec4(aPos, 0., 1.);
+            }`;
+
+        const frag = `
+            precision highp float;
+            uniform float uTime;
+            uniform vec2  uRes;
+            varying vec2  vUv;
+
+            vec3 mod289(vec3 x){return x - floor(x*(1./289.))*289.;}
+            vec4 mod289(vec4 x){return x - floor(x*(1./289.))*289.;}
+            vec4 permute(vec4 x){return mod289(((x*34.)+1.)*x);}
+            vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - .85373472095314*r;}
+            float snoise(vec3 v){
+                const vec2 C = vec2(1./6., 1./3.);
+                vec3 i  = floor(v + dot(v, C.yyy));
+                vec3 x0 = v - i + dot(i, C.xxx);
+                vec3 g  = step(x0.yzx, x0.xyz);
+                vec3 l  = 1. - g;
+                vec3 i1 = min(g.xyz, l.zxy);
+                vec3 i2 = max(g.xyz, l.zxy);
+                vec3 x1 = x0 - i1 + C.xxx;
+                vec3 x2 = x0 - i2 + C.yyy;
+                vec3 x3 = x0 - .5;
+                i = mod289(i);
+                vec4 p = permute(permute(permute(
+                    i.z+vec4(0.,i1.z,i2.z,1.))
+                    +i.y+vec4(0.,i1.y,i2.y,1.))
+                    +i.x+vec4(0.,i1.x,i2.x,1.));
+                vec4 j = p - 49.*floor(p*(1./7.)*(1./7.));
+                vec4 x_ = floor(j*(1./7.));
+                vec4 y_ = floor(j - 7.*x_);
+                vec4 x = (x_*2.+.5)/7. - 1.;
+                vec4 y = (y_*2.+.5)/7. - 1.;
+                vec4 h = 1. - abs(x) - abs(y);
+                vec4 b0 = vec4(x.xy, y.xy);
+                vec4 b1 = vec4(x.zw, y.zw);
+                vec4 s0 = floor(b0)*2.+1.;
+                vec4 s1 = floor(b1)*2.+1.;
+                vec4 sh = -step(h, vec4(0.));
+                vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+                vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+                vec3 p0 = vec3(a0.xy,h.x);
+                vec3 p1 = vec3(a0.zw,h.y);
+                vec3 p2 = vec3(a1.xy,h.z);
+                vec3 p3 = vec3(a1.zw,h.w);
+                vec4 norm = taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+                p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
+                vec4 m = max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);
+                m=m*m; return 42.*dot(m*m, vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+            }
+
+            float fbm(vec3 p){
+                float v=0., a=.5;
+                for(int i=0;i<4;i++){ v+=a*snoise(p); p*=2.; a*=.5; }
+                return v;
+            }
+
+            float grain(vec2 uv, float t){
+                return fract(sin(dot(uv * uRes + t, vec2(127.1,311.7)))*43758.545);
+            }
+
+            void main(){
+                float t = uTime * .2;
+                vec2 uv = vUv;
+
+                /* aspect-correct + rotated plane (rotZ=50deg) */
+                uv -= .5;
+                float aspect = uRes.x / uRes.y;
+                uv.x *= aspect;
+                float cosA = cos(.873), sinA = sin(.873);
+                uv = vec2(uv.x*cosA - uv.y*sinA, uv.x*sinA + uv.y*cosA);
+                uv *= 1.4;
+                uv.x -= 1.4;
+
+                float n  = fbm(vec3(uv * 1.0, t));
+                float n2 = fbm(vec3(uv * .7 + vec2(3.1, 1.7), t * .6));
+                float n3 = fbm(vec3(uv * 1.3 - vec2(1.5, 0.8), t * .4));
+
+                float b1 = clamp(n  * 2.2 * .4 + .5, 0., 1.);
+                float b2 = clamp(n2 * 2.2 * .35 + .5, 0., 1.);
+                float b3 = clamp(n3 * 1.8 * .25 + .5, 0., 1.);
+
+                /* deep dark navy → electric blue → vivid purple */
+                vec3 c1 = vec3(.012, .012, .047);   /* #030312 */
+                vec3 c2 = vec3(.141, .337, .910);   /* #2456e8 */
+                vec3 c3 = vec3(.361, .188, .820);   /* #5c30d1 */
+
+                vec3 color = mix(c1, c2, b1 * .85);
+                color = mix(color, c3, b2 * .65);
+                color = mix(color, c1 * .5, b3 * .3);   /* dark undertones */
+
+                /* directional light: brighter on left side */
+                float side = clamp(1. - vUv.x * 1.2, 0., 1.);
+                color += c2 * side * .06;
+
+                /* grain */
+                float g = grain(vUv, t * .3) * .055 - .027;
+                color = clamp(color + g, 0., 1.);
+
+                /* vignette: dark edges for text readability */
+                vec2 vig = vUv * 2. - 1.;
+                float vignette = 1. - dot(vig * vec2(.6, .8), vig * vec2(.6, .8));
+                vignette = clamp(vignette, 0., 1.);
+                vignette = pow(vignette, .6);
+                color *= mix(.1, 1., vignette);
+
+                gl_FragColor = vec4(color, 1.);
+            }`;
+
+        const compile = (type, src) => {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+                console.warn('Shader error:', gl.getShaderInfoLog(s));
+            }
+            return s;
+        };
+        const prog = gl.createProgram();
+        gl.attachShader(prog, compile(gl.VERTEX_SHADER, vert));
+        gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+        const aPos = gl.getAttribLocation(prog, 'aPos');
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+        const uTime = gl.getUniformLocation(prog, 'uTime');
+        const uRes  = gl.getUniformLocation(prog, 'uRes');
+
+        const resize = () => {
+            const w = container.offsetWidth, h = container.offsetHeight;
+            canvas.width  = Math.round(w * .85);
+            canvas.height = Math.round(h * .85);
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.uniform2f(uRes, canvas.width, canvas.height);
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const start = performance.now();
+        const loop = () => {
+            gl.uniform1f(uTime, (performance.now() - start) / 1000);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(loop);
+        };
+        loop();
+    })();
+    </script>
 </body>
 
 </html>
