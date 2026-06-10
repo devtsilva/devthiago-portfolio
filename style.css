@@ -2756,3 +2756,112 @@ body.cursor-hidden #cursor-ring {
 
 #shader-gradient ~ .hero-grid { opacity: .18; }
 #shader-gradient ~ .hero-glow { opacity: .35; }
+
+/* ─── MOBILE OVERHAUL ────────────────────────────────────────── */
+@media (max-width: 640px) {
+
+    /* 1. Code chips — ocultar em mobile (sobrepõem o conteúdo) */
+    .code-chip { display: none; }
+
+    /* 2. Stat cards — 2 colunas em vez de 1 */
+    .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-3);
+    }
+
+    .stat-card {
+        padding: var(--space-4) var(--space-3);
+    }
+
+    .stat-card__value {
+        font-size: clamp(1.6rem, 8vw, 2.2rem);
+    }
+
+    /* 3. Hero CTAs — gap menor, botões auto-width centralizados */
+    .hero-ctas {
+        gap: var(--space-3);
+    }
+
+    .hero-ctas .btn--primary {
+        width: auto;
+        min-width: 200px;
+    }
+
+    .hero-ctas .btn--outline {
+        width: auto;
+        min-width: 180px;
+    }
+
+    /* 4. Hero meta strip — menor e sem separador visual */
+    .hero-meta {
+        gap: var(--space-1) var(--space-2);
+        padding-top: 0;
+    }
+
+    .hero-meta__item {
+        font-size: 0.7rem;
+    }
+
+    /* 5. Esconder scroll indicator — salva espaço em mobile */
+    .hero-scroll { display: none; }
+
+    /* 6. About code card — 100% da largura disponível */
+    .about-code-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* 7. Back-to-top — menor e mais afastado da borda */
+    #back-to-top {
+        width: 40px;
+        height: 40px;
+        right: var(--space-4);
+        bottom: var(--space-5);
+    }
+
+    /* 8. Project card footer — margem direita p/ não colidir com back-to-top */
+    .project-card__footer {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+
+    /* 9. Section heading — tamanho mais generoso em mobile */
+    .section-title {
+        font-size: clamp(1.6rem, 7vw, 2rem);
+    }
+
+    /* 10. Contact social buttons — espaçamento vertical */
+    .contact-socials {
+        gap: var(--space-3);
+    }
+
+    /* 11. Footer padding */
+    .footer-cta__text {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+    }
+
+    /* 12. Stat card órfão — span 2 colunas quando for o único na linha */
+    .about-stats .stat-card:last-child:nth-child(odd) {
+        grid-column: span 2;
+    }
+
+    /* 13. Hero ghost button — mais visível sobre o gradient */
+    #hero-cta-contact {
+        color: var(--text-primary);
+        border-color: hsl(221, 90%, 62%, .45);
+    }
+
+    /* 14. Shader vignette — mais escura nas bordas em mobile p/ manter foco */
+    .sg-vignette {
+        background:
+            radial-gradient(ellipse 120% 100% at 50% 50%,
+                transparent 20%,
+                hsl(235, 50%, 4%, .65) 70%,
+                hsl(235, 50%, 4%, .92) 100%),
+            linear-gradient(180deg,
+                hsl(235, 50%, 4%, .45) 0%,
+                transparent 18%,
+                transparent 75%,
+                hsl(235, 50%, 4%, .7) 100%);
+    }
+}
