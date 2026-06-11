@@ -426,6 +426,44 @@ const ProjectModal = (() => {
     return { init };
 })();
 
+/* ─── 12b. CINE MODAL (iframe) ─────────────────────────────── */
+const CineModal = (() => {
+    const modal    = document.getElementById('cine-modal');
+    const closeBtn = document.getElementById('cine-modal-close');
+    const card     = document.getElementById('card-cine');
+    const iframe   = document.getElementById('cine-iframe');
+    let prevFocus  = null;
+
+    const open = () => {
+        if (!modal) return;
+        prevFocus = document.activeElement;
+        if (iframe && !iframe.src) iframe.src = 'https://cine-explorer-beryl.vercel.app/';
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn?.focus();
+    };
+
+    const close = () => {
+        if (!modal) return;
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        prevFocus?.focus();
+    };
+
+    const init = () => {
+        if (!modal) return;
+        card?.addEventListener('click', (e) => { if (!e.target.closest('a')) open(); });
+        card?.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+        closeBtn?.addEventListener('click', close);
+        modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-open')) close(); });
+    };
+
+    return { init };
+})();
+
 
 /* ─── 13. CONTACT FORM ─────────────────────────────────────── */
 const ContactForm = (() => {
@@ -643,6 +681,7 @@ const App = {
         HeroParticles.init();
         Counters.init();
         ProjectModal.init();
+        CineModal.init();
         ContactForm.init();
         BackToTop.init();
         HeroScrollIndicator.init();
